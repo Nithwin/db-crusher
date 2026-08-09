@@ -4,15 +4,50 @@ DB-Crusher is a high-performance backend project built to explore database optim
 
 Once we found the limits, we introduced **Redis Caching** to understand its real-world impact.
 
-## The Course: Building DB-Crusher
+## How to Run This Project
 
-I have written a step-by-step course explaining exactly how this project was built, complete with code snippets, architecture diagrams, and plain-english explanations of how the functions work.
+To run this project locally, you will need Go, PostgreSQL, and Redis installed on your machine.
 
-Read the course here:
-1. [Lesson 1: Creating a Go REST API](docs/01_go_rest_api.md)
-2. [Lesson 2: PostgreSQL Implementation](docs/02_postgres_implementation.md)
-3. [Lesson 3: Load Testing with JMeter](docs/03_jmeter_testing.md)
-4. [Lesson 4: Supercharging Performance with Redis](docs/04_redis_caching.md)
+### 1. Prerequisites
+*   [Go (1.22+)](https://go.dev/dl/)
+*   [PostgreSQL](https://www.postgresql.org/download/)
+*   [Redis](https://redis.io/download)
+
+### 2. Setup Environment Variables
+Create a `.env` file in the root directory and add your database credentials:
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=db_crusher
+```
+
+### 3. Run the Server
+Open your terminal, navigate to the project directory, and run:
+```bash
+go mod tidy
+go run main.go
+```
+You should see:
+```text
+Redis connected successfully
+Your server is running in http://localhost:8080
+```
+You can now test the API by visiting `http://localhost:8080/health` in your browser!
+
+---
+
+## The Course: Backend Mastery Journey
+
+I have written a comprehensive, book-style course explaining exactly how this project was built. It teaches the fundamental concepts of backend engineering from scratch.
+
+Read the chapters here:
+1. [Chapter 1: Teaching Go REST APIs](docs/01_go_rest_api.md)
+2. [Chapter 2: Mastering PostgreSQL in Go](docs/02_postgres_implementation.md)
+3. [Chapter 3: Load Testing with JMeter](docs/03_jmeter_testing.md)
+4. [Chapter 4: The Power of Redis Caching](docs/04_redis_caching.md)
+5. [Chapter 5: Full Architecture & Summary](docs/05_summary_architecture.md)
 
 ## The Impact of Redis Caching
 
