@@ -20,8 +20,8 @@ flowchart TD
     end
 
     subgraph Data Layer
-        Cache[(Redis Cache\nIn-Memory / Extremely Fast)]
-        DB[(PostgreSQL\nDisk-Based / Slow)]
+        Cache[("Redis Cache<br>In-Memory / Extremely Fast")]
+        DB[("PostgreSQL<br>Disk-Based / Slow")]
     end
 
     %% Flow

@@ -1,3 +1,5 @@
+![DB-Crusher Thumbnail](assets/thumbnail.png)
+
 # DB-Crusher
 
 DB-Crusher is a high-performance backend project built to explore database optimization, load testing, and caching strategies. The primary goal of this project was to implement a robust REST API in Go, connect it to PostgreSQL, and then crush it with traffic using Apache JMeter to see where it breaks. 
