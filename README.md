@@ -15,7 +15,14 @@ To run this project locally, you will need Go, PostgreSQL, and Redis installed o
 *   [PostgreSQL](https://www.postgresql.org/download/)
 *   [Redis](https://redis.io/download)
 
-### 2. Setup Environment Variables
+### 2. Clone the Repository
+Open your terminal and clone the repository:
+```bash
+git clone https://github.com/Nithwin/db-crusher.git
+cd db-crusher
+```
+
+### 3. Setup Environment Variables
 Create a `.env` file in the root directory and add your database credentials:
 ```env
 DB_HOST=localhost
@@ -25,7 +32,7 @@ DB_PASSWORD=your_password
 DB_NAME=db_crusher
 ```
 
-### 3. Run the Server
+### 4. Run the Server
 Open your terminal, navigate to the project directory, and run:
 ```bash
 go mod tidy
@@ -64,3 +71,13 @@ Here is the dramatic difference Redis made when we cached the database results f
 | **Throughput** | 41.0 req/sec | 101.3 req/sec | ~147% increase (2.47x) |
 
 Check out the [Load Test Comparison Details](load-test/comparison.md) for full JMeter report metrics.
+
+---
+
+## Community & Contributions
+
+We welcome contributions from the community! Whether it's adding new chapters, fixing bugs, or suggesting new tools to benchmark, we'd love your help.
+
+*   **[Contributing Guidelines](CONTRIBUTING.md):** Read this first to learn how to open an issue or submit a Pull Request.
+*   **[Code of Conduct](CODE_OF_CONDUCT.md):** Please read and follow our community standards.
+*   **[License](LICENSE):** This project is open-source and licensed under the MIT License.
