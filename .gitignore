@@ -24,3 +24,7 @@ go.work.sum
 # JetBrains IDE
 .idea/
 *.iml
+
+# JMeter files
+jmeter.log
+*.jtl
