@@ -1,15 +1,20 @@
 package handlers
 
 import (
+	"db-crusher/internal/cache"
 	"db-crusher/internal/database"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type UserHandler struct {
-	DB *database.Database
+	DB    *database.Database
+	Cache *cache.RedisClient
 }
 
 type User struct {
@@ -119,10 +124,50 @@ func (h *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 
 func (h *UserHandler) GetAnalytics(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	ctx := r.Context()
+
+	cached, err := h.Cache.Get(ctx, "analytics")
+
+	if err == nil {
+		fmt.Println("Cache HIT")
+		var analytics []database.AnalyticsResult
+		if err := json.Unmarshal([]byte(cached), &analytics); err != nil {
+			fmt.Println("cache contains invalid data ", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(analytics)
+		return
+	}
+
+	if err != redis.Nil {
+		fmt.Println("Redis error:", err)
+	} else {
+		fmt.Println("CACHE MISS")
+	}
+
 	analytics, err := h.DB.GetAnalytics()
 
 	if err != nil {
 		fmt.Println("Failed to Fetch! ", err)
+		return
+	}
+
+	data, err := json.Marshal(analytics)
+
+	if err != nil {
+		fmt.Println("Failed to Encode ")
+		return
+	}
+
+	err = h.Cache.Set(ctx,
+		"analytics",
+		string(data),
+		10*time.Second)
+
+	if err != nil {
+		fmt.Println("Failed to set Cache")
 		return
 	}
 

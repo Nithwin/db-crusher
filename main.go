@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"db-crusher/internal/cache"
 	"db-crusher/internal/database"
 	"db-crusher/internal/handlers"
 	"fmt"
@@ -15,6 +17,15 @@ func main() {
 		return
 	}
 
+	redisClient, err := cache.NewRedisClient(context.Background())
+	if err != nil {
+		fmt.Println("Redis connection failed:", err)
+		return
+	}
+	defer redisClient.Client.Close()
+
+	fmt.Println("Redis connected successfully")
+
 	db, err := database.NewDB()
 	if err != nil {
 		fmt.Println("Database connection failed:", err)
@@ -23,7 +34,8 @@ func main() {
 	defer db.DB.Close()
 
 	userHandler := &handlers.UserHandler{
-		DB: db,
+		DB:    db,
+		Cache: redisClient,
 	}
 	http.HandleFunc("GET /health", userHandler.HealthHandler)
 	http.HandleFunc("GET /users", userHandler.GetUsersHandler)
